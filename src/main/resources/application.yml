@@ -1,0 +1,55 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /financial-data
+  compression:
+    enabled: true
+    mime-types: application/json
+  error:
+    include-exception: true
+    include-binding-errors: always
+    include-stacktrace: always
+    include-message: always
+  shutdown: graceful
+  tomcat:
+    threads:
+      min-spare: 1
+      max: 50
+
+spring:
+  datasource:
+    url:
+    initialPoolSize: 0
+    username:
+    password:
+    drivers-class-name:
+    maximumPoolSize: 2
+    maxLifeTime: 600000
+  cloud:
+    config:
+      enabled: false
+      retry:
+        max-attempts: 1
+  jpa:
+    properties:
+      hibernate.dialect: org.hibernate.dialect.Oracle10gDialect
+      hibernate.proc.param_null_passing: true
+      hibernate.jdbc.batch_size: 20
+      hibernate.query.in_clause_parameter_padding: true
+  application:
+    name: financial-data
+  lifecycle:
+    timeout-oer-shutdown-phase: 300s
+
+Logging:
+  level:
+    org.springframework.web: DEBUG
+
+bank:
+  nbp:
+    url: "http://api.nbp.pl/api/exchangerates/tables/{table}/{date}"
+    publicHour: 13
+    enabled: ture
+    rangeOfDates: 7
+    tableA: "a"
+    tableB: "b"
